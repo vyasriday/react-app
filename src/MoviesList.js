@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
+import styled from 'styled-components';
 import Movie from './Movie';
 
-class MovieList extends React.Component { 
+class MovieList extends PureComponent {
   /* eslint-disable */
   state = {
     movies: []
@@ -22,11 +23,22 @@ class MovieList extends React.Component {
   render() {
 
     return (
-      <div>
+      /* 
+        * now here we replace the div with the MovieGrid. 
+        * Basically this replaces it with a div with the styles we have applied.
+      */
+      <MovieGrid>
         {this.state.movies.map(movie => <Movie key={movie.id} movie={movie}/>)}
-      </div>
+      </MovieGrid>
     );
   }
 }
 
 export default MovieList;
+// since we are applying this style on a div therefore styled.div
+const MovieGrid = styled.div`
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: repeat(5, 1fr);
+  grid-row-gap: 1rem;
+`;
