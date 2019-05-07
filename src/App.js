@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -8,8 +9,7 @@ import {
 import './App.css';
 import logo from './logo.svg';
 import MovieList from './MoviesList';
-
-const Test = ({ match }) => (<h3>{match.params.id}</h3>);
+import MovieDetails from './MovieDetails';
 
 const App = () => (
   <Router>
@@ -21,13 +21,12 @@ const App = () => (
       </header>
       <main>
         <Switch>
-          <Route path="/:id" component={Test} />
+          <Route path="/:id" component={MovieDetails} />
           <Route exact path="/" component={MovieList} />
         </Switch>
       </main>
     </div>
   </Router>
-
 );
 
 
