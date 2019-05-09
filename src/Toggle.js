@@ -1,15 +1,21 @@
+/* eslint-disable no-shadow */
 import React from 'react';
 // Inside the component that's going to use store import connect
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toggleMessage } from './actions';
 
 
 const Toggle = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { messageVisibility, dispatch } = props;
+  const { messageVisibility, toggleMessage } = props;
   return (
     <div>
       {messageVisibility && (<h4>Redux Magic Happening Here !!!</h4>)}
-      <button onClick={() => dispatch({ type: 'TOGGLE_MESSAGE' })} type="button"> Toggle </button>
+      {
+        /* dispatch takes an object so we must call the function. React is not going to call it for us. It isn't a callback.
+      */}
+      <button onClick={toggleMessage} type="button"> Toggle </button>
     </div>
   );
 };
@@ -24,6 +30,11 @@ const mapStateToProps = state => ({
   messageVisibility: state.message.messageVisibility,
 });
 
+// eslint-disable-next-line max-len
+// taking the action creator and binding it to dispatch. Now toggle message is available as props.toggleMessage
+const mapDispatchToProps = dispatch => bindActionCreators({
+  toggleMessage,
+}, dispatch);
 
 // instead of exporting default Toggle we will do this which is Toggle connected to our redux
-export default connect(mapStateToProps)(Toggle);
+export default connect(mapStateToProps, mapDispatchToProps)(Toggle);
