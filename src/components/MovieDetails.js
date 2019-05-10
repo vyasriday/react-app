@@ -59,16 +59,16 @@ const MovieWrapper = styled.div`
   > p {
     text-align: justify;
     color: #fdfdfd;
-    font-size: 1.2rem;
-    line-height: 1;
-    letter-spacing: 1px;
-    padding: 0 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 4px 1rem;
+    background: #00000087;
   }
   > h2 {
     font-sie: 3rem;
     letter-spacing: 4px;
     font-weight: bolder;
-    background: rgba(0, 200, 150, 0.2);
+    background: rgba(0,0,0 0.4);
     padding: 0 2rem; 
   }
 `;

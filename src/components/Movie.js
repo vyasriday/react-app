@@ -22,6 +22,7 @@ Movie.propTyoes = {
 export default Movie;
 
 // we can even export our styled components
-export const Poster = styled.img`
+const Poster = styled.img`
   box-shadow: 0 0 35px black;
+  margin: 20px auto;
 `;

@@ -13,7 +13,6 @@ import './App.css';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import { save, load } from 'redux-localstorage-simple';
-import logo from './logo.svg';
 import MovieList from './components/MoviesList';
 import MovieDetails from './components/MovieDetails';
 import rootReducer from './reducers/rootReducer';
@@ -37,7 +36,7 @@ const App = () => (
       <div className="App">
         <header className="App-header">
           <Link to="/">
-            <img src={logo} className="App-logo" alt="" />
+            <h3> React App </h3>
           </Link>
         </header>
         {/* <Toggle /> */}
