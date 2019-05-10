@@ -1,31 +1,31 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getMovie, resetMovie } from '../actions/movie';
 
 class MovieDetails extends PureComponent {
   /* eslint-disable */
   movieID = '';
   backdrop_path = 'https://image.tmdb.org/t/p/w1280';
-  state = {
-    movie: {}
-  }
 
   componentWillMount() {
     this.movieID = this.props.match.params.id;
   }
   
-  async componentDidMount() {
-    try {
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${this.movieID}?api_key=4e062be51f8b55a66259160103b5f870&language=en-US`)
-      const movie = await res.json();
-      this.setState({
-        movie,
-      })
-    } catch(e) {
-      throw e;
+  componentDidMount() {
+    const {getMovie, isLoaded} = this.props;
+    if(!isLoaded) {
+      getMovie(this.movieID);
     }
   }
+
+  componentWillUnmount() {
+    const { resetMovie } = this.props;
+    resetMovie();
+  }
   render() {
-    const { movie } = this.state;
+    const { movie } = this.props;
     return (
       //  Here we pass backdrop as  a prop which can be accessed down in styles
       <MovieWrapper backdrop={`${this.backdrop_path}/${movie.backdrop_path}`} >
@@ -36,7 +36,18 @@ class MovieDetails extends PureComponent {
   }
 }
 
-export default MovieDetails;
+const mapStateToProps = (state) => ({
+  movie: state.movies.movie,
+  isLoaded: state.movies.movieLoaded,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  getMovie,
+  resetMovie,
+}, dispatch)
+
+export default connect(mapStateToProps,mapDispatchToProps)(MovieDetails);
+
 // how do we pass our javascript data to our styled in styled components.
 const MovieWrapper = styled.div`
   position: relative;

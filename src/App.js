@@ -7,20 +7,24 @@ import {
   Link,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import './App.css';
+import logger from 'redux-logger';
+import thunk from 'redux-thunk';
+import { save, load } from 'redux-localstorage-simple';
 import logo from './logo.svg';
-import MovieList from './MoviesList';
-import MovieDetails from './MovieDetails';
-import rootReducer from './rootReducer';
-import Toggle from './Toggle';
+import MovieList from './components/MoviesList';
+import MovieDetails from './components/MovieDetails';
+import rootReducer from './reducers/rootReducer';
+import Toggle from './components/Toggle';
 
-
+const middleware = [logger, thunk];
+//  instead of {} as initial state we pass load function which checks for initial state in localStorage
 const store = createStore(
   rootReducer,
-  {},
-  composeWithDevTools(),
+  load(),
+  composeWithDevTools(applyMiddleware(...middleware, save())),
 );
 
 const App = () => (
@@ -36,7 +40,7 @@ const App = () => (
             <img src={logo} className="App-logo" alt="" />
           </Link>
         </header>
-        <Toggle />
+        {/* <Toggle /> */}
         <main>
           <Switch>
             <Route path="/:id" component={MovieDetails} />
@@ -47,6 +51,5 @@ const App = () => (
     </Router>
   </Provider>
 );
-
 
 export default App;
